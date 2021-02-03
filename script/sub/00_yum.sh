@@ -2,11 +2,12 @@
 
 if [ ! -e /etc/redhat-release ] ; then
     echo "Cannot find '/etc/redhat-release'."
-    echo "Abort since this script assumes Scientific Linux."
+    echo "Abort since this script assumes Enterprise Linux."
     exit 1
 fi
-if ! grep -q 'Scientific Linux release 7.[6789] ' /etc/redhat-release ; then
-    echo "The OS version seems not SL 7.6, 7.7, 7.8 or 7.9."
+majversion=$(lsb_release -rs | cut -f1 -d.)
+if [ majversion != "8" ]; then
+    echo "The OS version seems not EL 8."
     echo "Abort since this script assumes this version."
     exit 1
 fi
@@ -30,7 +31,7 @@ done <<EOF
   gcc-c++
   gcc-gfortran
   boost-devel
-  python-devel
+  python36-devel
   cmake
   doxygen
   mariadb-devel
@@ -59,13 +60,13 @@ if [ ${#LIST_PKG[*]} -eq 0 ] ; then
 else
     echo "Some essential packages were found not installed."
     echo "Execute the following command as root:"
-    echo "  yum install ${LIST_PKG[*]}"
+    echo "  dnf install ${LIST_PKG[*]}"
     exit 1
 fi
 exit 0
 
 
-#yum install \
+#dnf install \
 #  screen git-all cmake doxygen \
 #  mariadb-devel sqlite-devel \
 #  zlib-devel \
