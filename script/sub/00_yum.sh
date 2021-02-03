@@ -6,7 +6,7 @@ if [ ! -e /etc/redhat-release ] ; then
     exit 1
 fi
 majversion=$(lsb_release -rs | cut -f1 -d.)
-if [ majversion != "8" ]; then
+if [ ${majversion} != 8 ]; then
     echo "The OS version seems not EL 8."
     echo "Abort since this script assumes this version."
     exit 1
