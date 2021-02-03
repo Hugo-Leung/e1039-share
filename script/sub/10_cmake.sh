@@ -2,6 +2,10 @@
 ##
 ## Install a recent cmake version
 ##
+if cmake --version | grep -q 3 ; then
+	echo "cmake version 3 alredy installed"
+	exit 0
+fi
 set -e
 test -z $DIR_BUILD && exit 9
 test -z $DIR_INST  && exit 9
